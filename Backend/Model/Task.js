@@ -6,7 +6,7 @@ const taskSchema = new Schema({
   dueDate: { type: Date },
   priority: { type: String, enum: ["Low", "Medium", "High"], default: "Low" },
   status: { type: String, enum: ["Pending", "Completed"], default: "Pending" },
-  createdBy: { type: Schema.Types.ObjectId, ref: "User" },
+  createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 export const Task = model("Task", taskSchema);
