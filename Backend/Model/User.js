@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 import validator from "validator";
+import { compare } from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
@@ -33,4 +35,21 @@ userSchema.set("toJSON", {
   },
 });
 
+userSchema.methods.validatePassword = async function (password) {
+  const user = this;
+
+  const isCorrectPassword = await compare(password, user.password);
+
+  return isCorrectPassword;
+};
+
+userSchema.methods.getUserIdToken = function () {
+  const user = this;
+
+  const userIdToken = jwt.sign({ id: user.id }, "Akshay#2028", {
+    expiresIn: "1h",
+  });
+
+  return userIdToken;
+};
 export const User = model("User", userSchema);

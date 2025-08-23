@@ -38,3 +38,30 @@ userRouter.post("/create", async (req, res) => {
     data,
   });
 });
+
+userRouter.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).send({ message: "Email and password are required" });
+  }
+
+  const user = await User.findOne({ email: email.toLowerCase() });
+
+  if (!user) {
+    return res.status(401).send({ message: "Invalid credential" });
+  }
+
+  const isCorrectPassword = await user.validatePassword(password);
+
+  if (!isCorrectPassword) {
+    return res.status(401).send({ message: "Invalid credential" });
+  }
+
+  const userIdToken = user.getUserIdToken();
+
+  res.cookie("UserIdToken", userIdToken, {
+    maxAge: 20 * 1000 * 60 * 60,
+  });
+  return res.status(200).json({ message: "LogIn Successfull" });
+});
