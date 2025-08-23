@@ -10,7 +10,7 @@ const PORT = 7777;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/task", taskRouter);
+app.use("/tasks", taskRouter);
 
 (async function () {
   try {
