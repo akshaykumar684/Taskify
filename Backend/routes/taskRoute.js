@@ -1,7 +1,7 @@
 import express from "express";
 import { Task } from "../Model/Task.js";
 import { validateTaskUpdateField } from "../utils/Task/taskValidation.js";
-
+import { authMiddleWare as auth } from "../middlewares/index.js";
 export const router = express.Router();
 
 router.get("/:taskId", async (req, res) => {
@@ -36,16 +36,16 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/create", async (req, res) => {
-  const { title, description, dueDate, priority, status, createdBy } = req.body;
-
+router.post("/create", auth, async (req, res) => {
+  const { title, description, dueDate, priority, status } = req.body;
+  const loggedInUserId = req.loggedInUser.id;
   const task = new Task({
     title,
     description,
     dueDate,
     priority,
     status,
-    createdBy,
+    createdBy: loggedInUserId,
   });
 
   const data = await task.save();
@@ -56,7 +56,7 @@ router.post("/create", async (req, res) => {
   });
 });
 
-router.put("/:taskId", async (req, res) => {
+router.put("/:taskId", auth, async (req, res) => {
   if (!validateTaskUpdateField(req.body)) {
     return res.status(400).send({
       message:
@@ -84,7 +84,7 @@ router.put("/:taskId", async (req, res) => {
   });
 });
 
-router.delete("/:taskId", async (req, res) => {
+router.delete("/:taskId", auth, async (req, res) => {
   const { taskId } = req.params;
 
   const deletedTask = await Task.findByIdAndDelete(taskId);
