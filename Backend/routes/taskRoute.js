@@ -1,5 +1,6 @@
 import express from "express";
 import { Task } from "../Model/Task.js";
+import { validateTaskUpdateField } from "../utils/Task/taskValidation.js";
 
 export const router = express.Router();
 
@@ -54,22 +55,6 @@ router.post("/create", async (req, res) => {
     data,
   });
 });
-
-function validateTaskUpdateField(task) {
-  const allowedFieldForTaskToUpdate = [
-    "title",
-    "description",
-    "dueDate",
-    "priority",
-    "status",
-  ];
-
-  const isTaskFieldValid = Object.keys(task).every((field) =>
-    allowedFieldForTaskToUpdate.includes(field)
-  );
-
-  return isTaskFieldValid;
-}
 
 router.put("/:taskId", async (req, res) => {
   if (!validateTaskUpdateField(req.body)) {
