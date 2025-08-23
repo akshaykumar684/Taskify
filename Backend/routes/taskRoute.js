@@ -3,6 +3,20 @@ import { Task } from "../Model/Task.js";
 
 export const router = express.Router();
 
+router.get("/:taskId", async (req, res) => {
+  const { taskId } = req.params;
+
+  const task = await Task.findById(taskId);
+
+  if (!task) {
+    return res
+      .status(404)
+      .send({ msg: `There is no task found with id: ${taskId}` });
+  }
+
+  res.json(task);
+});
+
 // get all task also filter task if status and priority are present
 router.get("/", async (req, res) => {
   const { status, priority } = req.query;
@@ -41,16 +55,61 @@ router.post("/create", async (req, res) => {
   });
 });
 
-router.get("/fetch/:taskId", async (req, res) => {
+function validateTaskUpdateField(task) {
+  const allowedFieldForTaskToUpdate = [
+    "title",
+    "description",
+    "dueDate",
+    "priority",
+    "status",
+  ];
+
+  const isTaskFieldValid = Object.keys(task).every((field) =>
+    allowedFieldForTaskToUpdate.includes(field)
+  );
+
+  return isTaskFieldValid;
+}
+
+router.put("/:taskId", async (req, res) => {
+  if (!validateTaskUpdateField(req.body)) {
+    return res.status(400).send({
+      message:
+        "Invalid Input, only title,description,dueDate,priority or status is allowed",
+    });
+  }
+
   const { taskId } = req.params;
 
   const task = await Task.findById(taskId);
 
   if (!task) {
-    return res
-      .status(404)
-      .send({ msg: `There is no task found with id: ${taskId}` });
+    return res.status(404).send({
+      msg: `There is no task found with is: ${taskId}`,
+    });
   }
 
-  res.json(task);
+  Object.entries(req.body).forEach(([key, value]) => (task[key] = value));
+
+  const updatedTask = await task.save();
+
+  res.status(200).json({
+    success: true,
+    data: updatedTask,
+  });
+});
+
+router.delete("/:taskId", async (req, res) => {
+  const { taskId } = req.params;
+
+  const deletedTask = await Task.findByIdAndDelete(taskId);
+
+  if (!deletedTask) {
+    return res.status(404).json({ message: "Task not found" });
+  }
+
+  res.status(200).json({
+    message: "Task deleted successfully",
+    task: deletedTask,
+  });
 });

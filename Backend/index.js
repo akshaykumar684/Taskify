@@ -5,7 +5,7 @@ import { connectToDb } from "./utils/Db/connectToDb.js";
 
 const app = express();
 
-const PORT = 7777;
+const PORT = 6666;
 
 app.use(express.json());
 app.use(cookieParser());
