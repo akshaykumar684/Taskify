@@ -1,4 +1,4 @@
 import React from "react";
-import { TaskForm } from "../Components";
+import { CreateTaskForm } from "../Components";
 
-export const NewTask = () => <TaskForm />;
+export const NewTask = () => <CreateTaskForm />;

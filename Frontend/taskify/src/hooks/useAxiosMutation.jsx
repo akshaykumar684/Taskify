@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const initialApiData = {
@@ -8,7 +8,7 @@ const initialApiData = {
   errorMessage: "",
 };
 
-export const useAxiosPost = (url, onErrorCb) => {
+export const useAxiosMutation = (url, method = "POST", onErrorCb) => {
   const [apiData, setApiData] = useState(initialApiData);
 
   const makeApiCall = async (formData) => {
@@ -18,13 +18,17 @@ export const useAxiosPost = (url, onErrorCb) => {
         isLoading: true,
       });
 
-      const data = (await axios.post(url, formData, { withCredentials: true }))
-        .data;
+      let response;
+      if (method.toUpperCase() === "PUT") {
+        response = await axios.put(url, formData, { withCredentials: true });
+      } else {
+        response = await axios.post(url, formData, { withCredentials: true });
+      }
 
       setApiData((prev) => ({
         ...prev,
         isLoading: false,
-        data,
+        data: response.data,
       }));
     } catch (error) {
       onErrorCb?.(error.message);

@@ -36,7 +36,7 @@ export const TaskList = () => {
       {!isLoggedIn && (
         <AlertComponent
           type="info"
-          message="Please Login First to Edit/Delete Tasks"
+          message="Please Login First to Add/Edit/Delete Tasks"
         />
       )}
       <div className="overflow-x-auto">

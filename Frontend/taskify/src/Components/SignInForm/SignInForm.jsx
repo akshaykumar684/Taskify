@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { userActions } from "../../store/user/userSlice";
-import { useAxiosPost } from "../../hooks";
+import { useAxiosMutation } from "../../hooks";
 import { AlertComponent } from "../../Components";
 
 export const SignInForm = () => {
@@ -16,8 +16,9 @@ export const SignInForm = () => {
   const dispatch = useDispatch();
   const { updateLoggedInUserDetails } = userActions;
 
-  const [{ isLoading, isError, errorMessage }, makePostCall] = useAxiosPost(
-    "http://localhost:4000/user/login"
+  const [{ isLoading, isError, errorMessage }, makePostCall] = useAxiosMutation(
+    "http://localhost:4000/user/login",
+    "POST"
   );
 
   const handleChange = (e) => {

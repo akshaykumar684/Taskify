@@ -2,14 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { useAxiosPost } from "../../hooks";
+import { useAxiosMutation } from "../../hooks";
 import { userActions } from "../../store/user/userSlice";
 
 export const Navbar = () => {
   const { isLoggedIn, loggedInUserEmail } = useSelector((state) => state.user);
 
-  const [{ isLoading, isError }, makePostCall] = useAxiosPost(
-    "http://localhost:4000/user/logOut"
+  const [{ isLoading, isError }, makePostCall] = useAxiosMutation(
+    "http://localhost:4000/user/logOut",
+    "POST"
   );
 
   const dispatch = useDispatch();

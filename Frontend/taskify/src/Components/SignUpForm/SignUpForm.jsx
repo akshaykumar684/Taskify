@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useAxiosPost } from "../../hooks";
+import { useAxiosMutation } from "../../hooks";
 import { AlertComponent } from "../../Components";
 
 const initialFormData = {
@@ -13,7 +13,7 @@ export const SignUpForm = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const [{ isLoading, isError, errorMessage, data }, makePostCall] =
-    useAxiosPost("http://localhost:4000/user/create");
+    useAxiosMutation("http://localhost:4000/user/create", "POST");
 
   const handleChange = (e) => {
     setFormData({

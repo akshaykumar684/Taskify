@@ -1,4 +1,4 @@
 import { useAxiosGet } from "./useAxiosGet";
-import { useAxiosPost } from "./useAxiosPost";
+import { useAxiosMutation } from "./useAxiosMutation";
 
-export { useAxiosGet, useAxiosPost };
+export { useAxiosGet, useAxiosMutation };
