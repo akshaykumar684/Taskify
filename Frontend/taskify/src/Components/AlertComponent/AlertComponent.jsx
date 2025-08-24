@@ -21,7 +21,7 @@ export const AlertComponent = ({ type, message }) => {
   const { alertClass, alertIcon } = alertConfig[type];
   return (
     <>
-      <div role="alert" className={`alert ${alertClass}`}>
+      <div role="alert" className={`alert ${alertClass} sticky top-0 z-40`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6 shrink-0 stroke-current"

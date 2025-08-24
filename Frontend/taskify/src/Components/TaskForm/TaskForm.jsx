@@ -6,7 +6,7 @@ import { AlertComponent } from "../../Components";
 const initialTaskData = {
   title: "",
   description: "",
-  dueData: new Date().toISOString().split("T")[0],
+  dueDate: new Date().toISOString().split("T")[0],
   priority: "",
   status: "",
 };
@@ -18,8 +18,6 @@ export const TaskForm = () => {
     useAxiosPost("http://localhost:4000/tasks/create");
 
   const handleChange = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -29,6 +27,7 @@ export const TaskForm = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      console.log(formData);
       await makePostCall(formData);
 
       setFormData(initialTaskData);
@@ -88,8 +87,9 @@ export const TaskForm = () => {
                   name="dueDate"
                   placeholder="Enter Due Date"
                   className="input input-bordered w-full"
-                  value={formData.dueData}
+                  value={formData.dueDate}
                   onChange={handleChange}
+                  min={initialTaskData.dueDate}
                   required
                 />
               </div>
