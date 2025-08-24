@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { taskAction } from "../../store/task/taskSlice";
 import { AlertComponent } from "../../Components";
@@ -13,6 +14,8 @@ export const TaskList = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const deleteTaskHandler = async (taskId) => {
     try {
       const url = `http://localhost:4000/tasks/${taskId}`;
@@ -22,6 +25,10 @@ export const TaskList = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const taskEditHandler = async (taskId) => {
+    navigate(`/tasks/${taskId}`);
   };
 
   return (
@@ -55,7 +62,10 @@ export const TaskList = () => {
                   <td>{status}</td>
                   {isLoggedIn && (
                     <th>
-                      <button className="btn btn-soft btn-primary mr-2">
+                      <button
+                        className="btn btn-soft btn-primary mr-2"
+                        onClick={() => taskEditHandler(_id)}
+                      >
                         Edit
                       </button>
                       {status === "Completed" && (
