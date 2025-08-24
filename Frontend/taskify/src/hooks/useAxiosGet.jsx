@@ -18,8 +18,6 @@ export const useAxiosGet = (url) => {
       }));
       const data = (await axios.get(url)).data;
 
-      console.log(data);
-
       setApiData((prev) => ({
         ...prev,
         isLoading: false,

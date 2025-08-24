@@ -17,6 +17,12 @@ export const Navbar = () => {
           <li>
             <Link to="/tasks/new">New Task</Link>
           </li>
+          <li>
+            <Link to="/account/signIn">Sign In</Link>
+          </li>
+          <li>
+            <Link to="/account/signUp">Sign Up</Link>
+          </li>
         </ul>
       </div>
     </div>

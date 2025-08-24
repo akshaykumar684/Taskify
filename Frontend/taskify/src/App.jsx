@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home, TaskDetails, NewTask } from "./Pages";
+import { Home, TaskDetails, NewTask, AccountPage } from "./Pages";
 import { Navbar } from "./Components";
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/tasks/new" element={<NewTask />} />
         <Route path="/tasks/:id" element={<TaskDetails />} />
+        <Route path="/account/:mode" element={<AccountPage />} />
       </Routes>
     </Router>
   );
