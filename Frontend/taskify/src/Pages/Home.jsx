@@ -9,8 +9,6 @@ export const Home = () => {
     data: taskList,
   } = useAxiosGet("http://localhost:4000/tasks");
 
-  console.log(taskList);
-
   if (isLoading) {
     return <TaskLoadingSkeleton />;
   }

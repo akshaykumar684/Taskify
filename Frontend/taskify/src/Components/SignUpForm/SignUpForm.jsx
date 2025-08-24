@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAxiosPost } from "../../hooks";
 
 export const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,13 @@ export const SignUpForm = () => {
     password: "",
   });
 
+  const [apiData, makePostCall] = useAxiosPost(
+    "http://localhost:4000/user/create",
+    () => {
+      console.log("something went wrong");
+    }
+  );
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -14,9 +22,10 @@ export const SignUpForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Signup data:", formData);
+    await makePostCall(formData);
   };
 
   return (
