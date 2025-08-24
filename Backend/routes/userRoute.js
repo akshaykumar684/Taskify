@@ -67,8 +67,5 @@ userRouter.post("/login", async (req, res) => {
 });
 
 userRouter.post("/logOut", (req, res) => {
-  res
-    .clearCookie("UserIdToken")
-    .status(200)
-    .json({ message: "LogOut Successful" });
+  res.clearCookie("UserIdToken").status(200).json({ msg: "LogOut Successful" });
 });

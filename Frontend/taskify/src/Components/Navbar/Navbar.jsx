@@ -1,9 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useAxiosPost } from "../../hooks";
+import { userActions } from "../../store/user/userSlice";
 
 export const Navbar = () => {
   const { isLoggedIn, loggedInUserEmail } = useSelector((state) => state.user);
+
+  const [{ isLoading, isError }, makePostCall] = useAxiosPost(
+    "http://localhost:4000/user/logOut"
+  );
+
+  const dispatch = useDispatch();
+  const { updateLoggedInUserDetails } = userActions;
+
+  const signOutHandler = async () => {
+    try {
+      await makePostCall({});
+      dispatch(
+        updateLoggedInUserDetails({
+          isLoggedIn: false,
+          loggedInUserEmail: null,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="navbar bg-base-200 shadow-md px-4">
       <div className="flex-1">
@@ -11,7 +36,8 @@ export const Navbar = () => {
           Taskify
         </Link>
       </div>
-      <div className="flex-none">
+
+      <div className="flex-none flex items-center gap-4">
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link to="/">Home</Link>
@@ -20,7 +46,23 @@ export const Navbar = () => {
             <Link to="/tasks/new">New Task</Link>
           </li>
           {isLoggedIn ? (
-            <button class="btn btn-outline btn-primary">Sing Out</button>
+            <>
+              <li>
+                <span className="text-sm font-medium">{loggedInUserEmail}</span>
+              </li>
+              <li>
+                <button
+                  className="btn btn-outline btn-primary"
+                  onClick={signOutHandler}
+                >
+                  {isLoading ? (
+                    <span className="loading loading-dots loading-xs"></span>
+                  ) : (
+                    "Sign Out"
+                  )}
+                </button>
+              </li>
+            </>
           ) : (
             <>
               <li>
