@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,11 @@ export const TaskList = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const { setCurrentSelectedTask, deleteTask } = taskAction;
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+
+  const [statusFilter, setStatusFilter] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
 
   const deleteTaskHandler = async (taskId) => {
     try {
@@ -47,6 +48,13 @@ export const TaskList = () => {
     navigate(`/tasks/${_id}`);
   };
 
+  const filteredTasks = taskList.filter((task) => {
+    return (
+      (statusFilter ? task.status === statusFilter : true) &&
+      (priorityFilter ? task.priority === priorityFilter : true)
+    );
+  });
+
   return (
     <>
       {!isLoggedIn && (
@@ -62,13 +70,43 @@ export const TaskList = () => {
               <th>Title</th>
               <th>Description</th>
               <th>Due Date</th>
-              <th>Priority</th>
-              <th>Status</th>
+
+              <th>
+                <div className="flex flex-col">
+                  <span className="font-medium">Priority</span>
+                  <select
+                    className="select select-bordered select-sm mt-1"
+                    value={priorityFilter}
+                    onChange={(e) => setPriorityFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+              </th>
+
+              <th>
+                <div className="flex flex-col">
+                  <span className="font-medium">Status</span>
+                  <select
+                    className="select select-bordered select-sm mt-1"
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+              </th>
+
               {isLoggedIn && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
-            {taskList.map(
+            {filteredTasks.map(
               ({ _id, title, description, dueDate, priority, status }) => (
                 <tr key={_id}>
                   <td>{title}</td>
