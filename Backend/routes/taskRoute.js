@@ -59,8 +59,7 @@ router.post("/create", auth, async (req, res) => {
 router.put("/:taskId", auth, async (req, res) => {
   if (!validateTaskUpdateField(req.body)) {
     return res.status(400).send({
-      message:
-        "Invalid Input, only title,description,dueDate,priority or status is allowed",
+      msg: "Invalid Input, only title,description,dueDate,priority or status is allowed",
     });
   }
 
@@ -94,7 +93,7 @@ router.delete("/:taskId", auth, async (req, res) => {
   }
 
   res.status(200).json({
-    message: "Task deleted successfully",
+    msg: "Task deleted successfully",
     task: deletedTask,
   });
 });
