@@ -4,6 +4,7 @@ import { TaskList } from "./TaskList/TaskList";
 import { AlertComponent } from "./AlertComponent/AlertComponent";
 import { SignUpForm } from "./SignUpForm/SignUpForm";
 import { SignInForm } from "./SignInForm/SignInForm";
+import { TaskForm } from "./TaskForm/TaskForm";
 
 export {
   Navbar,
@@ -12,4 +13,5 @@ export {
   AlertComponent,
   SignUpForm,
   SignInForm,
+  TaskForm,
 };
