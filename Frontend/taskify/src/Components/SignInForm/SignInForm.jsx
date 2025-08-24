@@ -17,7 +17,7 @@ export const SignInForm = () => {
   const { updateLoggedInUserDetails } = userActions;
 
   const [{ isLoading, isError, errorMessage }, makePostCall] = useAxiosMutation(
-    "http://localhost:4000/user/login",
+    "http://localhost:4000/user/signin",
     "POST"
   );
 

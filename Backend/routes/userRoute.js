@@ -6,7 +6,7 @@ import { validateUserField } from "../utils/Task/index.js";
 
 export const userRouter = Router();
 
-userRouter.post("/create", async (req, res) => {
+userRouter.post("/signup", async (req, res) => {
   if (!validateUserField(req.body)) {
     return res.status(400).send({
       msg: "Invalid Input. Name should be alphabet only, password should contain alphabet and numbers and email should be in proper format",
@@ -39,7 +39,7 @@ userRouter.post("/create", async (req, res) => {
   });
 });
 
-userRouter.post("/login", async (req, res) => {
+userRouter.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -66,6 +66,6 @@ userRouter.post("/login", async (req, res) => {
   return res.status(200).json({ msg: "LogIn Successful" });
 });
 
-userRouter.post("/logOut", (req, res) => {
+userRouter.post("/signout", (req, res) => {
   res.clearCookie("UserIdToken").status(200).json({ msg: "LogOut Successful" });
 });

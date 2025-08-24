@@ -8,8 +8,8 @@ import { userActions } from "../../store/user/userSlice";
 export const Navbar = () => {
   const { isLoggedIn, loggedInUserEmail } = useSelector((state) => state.user);
 
-  const [{ isLoading, isError }, makePostCall] = useAxiosMutation(
-    "http://localhost:4000/user/logOut",
+  const [{ isLoading }, makePostCall] = useAxiosMutation(
+    "http://localhost:4000/user/signout",
     "POST"
   );
 

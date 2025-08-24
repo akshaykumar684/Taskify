@@ -13,7 +13,7 @@ export const SignUpForm = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const [{ isLoading, isError, errorMessage, data }, makePostCall] =
-    useAxiosMutation("http://localhost:4000/user/create", "POST");
+    useAxiosMutation("http://localhost:4000/user/signup", "POST");
 
   const handleChange = (e) => {
     setFormData({
