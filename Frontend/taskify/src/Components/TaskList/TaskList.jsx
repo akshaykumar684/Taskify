@@ -1,6 +1,6 @@
 import React from "react";
 
-export const TaskTable = ({ taskList }) => {
+export const TaskList = ({ taskList }) => {
   return (
     <div className="overflow-x-auto">
       <table className="table">

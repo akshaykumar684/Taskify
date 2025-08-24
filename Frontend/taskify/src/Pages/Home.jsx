@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAxiosGet } from "../hooks/useAxiosGet";
-import { TaskTable, TaskLoadingSkeleton } from "../Components";
+import { TaskList, TaskLoadingSkeleton, AlertComponent } from "../Components";
 
 export const Home = () => {
   const {
@@ -14,7 +14,15 @@ export const Home = () => {
   if (isLoading) {
     return <TaskLoadingSkeleton />;
   }
-  // return <p>Loaded</p>;
 
-  return <TaskTable taskList={taskList.data} />;
+  if (isError) {
+    return (
+      <AlertComponent
+        type="warning"
+        message="Our server is stubborn.Please try again later "
+      />
+    );
+  }
+
+  return <TaskList taskList={taskList.data} />;
 };
