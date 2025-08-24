@@ -5,6 +5,7 @@ const initialApiData = {
   isLoading: false,
   data: null,
   isError: false,
+  errorMessage: "",
 };
 
 export const useAxiosPost = (url, onErrorCb) => {
@@ -12,10 +13,10 @@ export const useAxiosPost = (url, onErrorCb) => {
 
   const makeApiCall = async (formData) => {
     try {
-      setApiData((prev) => ({
-        ...prev,
+      setApiData({
+        ...initialApiData,
         isLoading: true,
-      }));
+      });
 
       const data = (await axios.post(url, formData, { withCredentials: true }))
         .data;
@@ -26,13 +27,14 @@ export const useAxiosPost = (url, onErrorCb) => {
         data,
       }));
     } catch (error) {
-      console.log(error);
       onErrorCb?.(error.message);
       setApiData((prev) => ({
         ...prev,
         isLoading: false,
         isError: true,
+        errorMessage: error.response?.data?.msg || error.message,
       }));
+      throw error;
     }
   };
 

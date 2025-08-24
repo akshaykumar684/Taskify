@@ -18,7 +18,7 @@ userRouter.post("/create", async (req, res) => {
   const existingUser = await User.findOne({ email: email.toLowerCase() });
 
   if (existingUser) {
-    return res.status(402).send({
+    return res.status(409).send({
       msg: `User already exists with email: ${email}`,
     });
   }
