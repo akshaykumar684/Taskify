@@ -5,6 +5,7 @@ export const TaskForm = ({
   isLoading,
   onSubmit,
   submitButtonLabel,
+  isUpdateTask = false,
 }) => {
   const [formData, setFormData] = useState(initialTaskData);
 
@@ -21,10 +22,15 @@ export const TaskForm = ({
 
       await onSubmit(formData);
 
-      setFormData(initialTaskData);
+      !isUpdateTask && setFormData(initialTaskData);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const formatDate = (isoString) => {
+    if (!isoString) return "";
+    return new Date(isoString).toISOString().split("T")[0]; // "2027-01-09"
   };
 
   return (
@@ -73,7 +79,7 @@ export const TaskForm = ({
                 name="dueDate"
                 placeholder="Enter Due Date"
                 className="input input-bordered w-full"
-                value={formData.dueDate}
+                value={formatDate(formData.dueDate)}
                 onChange={handleChange}
                 min={initialTaskData.dueDate}
                 required

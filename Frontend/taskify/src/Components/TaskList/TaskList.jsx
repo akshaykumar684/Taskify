@@ -10,7 +10,7 @@ export const TaskList = () => {
   const taskList = useSelector((state) => state.task.taskLists);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  const { deleteTask } = taskAction;
+  const { setCurrentSelectedTask, deleteTask } = taskAction;
 
   const dispatch = useDispatch();
 
@@ -27,8 +27,24 @@ export const TaskList = () => {
     }
   };
 
-  const taskEditHandler = async (taskId) => {
-    navigate(`/tasks/${taskId}`);
+  const taskEditHandler = async ({
+    _id,
+    title,
+    description,
+    dueDate,
+    priority,
+    status,
+  }) => {
+    dispatch(
+      setCurrentSelectedTask({
+        title,
+        description,
+        dueDate,
+        priority,
+        status,
+      })
+    );
+    navigate(`/tasks/${_id}`);
   };
 
   return (
@@ -64,7 +80,16 @@ export const TaskList = () => {
                     <th>
                       <button
                         className="btn btn-soft btn-primary mr-2"
-                        onClick={() => taskEditHandler(_id)}
+                        onClick={() =>
+                          taskEditHandler({
+                            _id,
+                            title,
+                            description,
+                            dueDate,
+                            priority,
+                            status,
+                          })
+                        }
                       >
                         Edit
                       </button>

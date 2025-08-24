@@ -10,7 +10,7 @@ const taskSlice = createSlice({
   initialState,
   reducers: {
     setCurrentSelectedTask(state, action) {
-      state.selectedTask = action.task;
+      state.selectedTask = action.payload;
     },
     setTaskList(state, action) {
       state.taskLists = action.payload;
