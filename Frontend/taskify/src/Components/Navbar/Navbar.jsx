@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const { isLoggedIn, loggedInUserEmail } = useSelector((state) => state.user);
   return (
     <div className="navbar bg-base-200 shadow-md px-4">
       <div className="flex-1">
@@ -17,12 +19,18 @@ export const Navbar = () => {
           <li>
             <Link to="/tasks/new">New Task</Link>
           </li>
-          <li>
-            <Link to="/account/signIn">Sign In</Link>
-          </li>
-          <li>
-            <Link to="/account/signUp">Sign Up</Link>
-          </li>
+          {isLoggedIn ? (
+            <button class="btn btn-outline btn-primary">Sing Out</button>
+          ) : (
+            <>
+              <li>
+                <Link to="/account/signIn">Sign In</Link>
+              </li>
+              <li>
+                <Link to="/account/signUp">Sign Up</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

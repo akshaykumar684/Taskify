@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
+import { userActions } from "../../store/user/userSlice";
 import { useAxiosPost } from "../../hooks";
 import { AlertComponent } from "../../Components";
 
@@ -11,6 +13,8 @@ export const SignInForm = () => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { updateLoggedInUserDetails } = userActions;
 
   const [{ isLoading, isError, errorMessage }, makePostCall] = useAxiosPost(
     "http://localhost:4000/user/login"
@@ -29,6 +33,12 @@ export const SignInForm = () => {
     try {
       e.preventDefault();
       await makePostCall(formData);
+      dispatch(
+        updateLoggedInUserDetails({
+          isLoggedIn: true,
+          loggedInUserEmail: formData.email,
+        })
+      );
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -41,7 +51,7 @@ export const SignInForm = () => {
       <div className="flex justify-center items-center min-h-screen bg-base-200">
         <div className="card w-96 bg-base-100 shadow-xl">
           <div className="card-body">
-            <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+            <h2 className="text-2xl font-bold text-center">Sign In</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="form-control">
