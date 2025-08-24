@@ -10,7 +10,7 @@ export const authMiddleWare = async (req, res, next) => {
       throw new Error("You are Unauthorized, please login first");
     }
 
-    const { id } = jwt.verify(UserIdToken, "Akshay#2028");
+    const { id } = jwt.verify(UserIdToken, process.env.JWT_SECRET);
 
     const loggedInUser = await User.findById(id);
 
