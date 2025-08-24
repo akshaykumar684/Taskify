@@ -16,12 +16,19 @@ export const AlertComponent = ({ type, message }) => {
       alertClass: "alert-success",
       alertIcon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
     },
+    info: {
+      alertClass: "alert-info",
+      alertIcon: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    },
   };
 
   const { alertClass, alertIcon } = alertConfig[type];
   return (
     <>
-      <div role="alert" className={`alert ${alertClass} sticky top-0 z-40`}>
+      <div
+        role="alert"
+        className={`alert ${alertClass} sticky top-0 z-40 my-4`}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6 shrink-0 stroke-current"
