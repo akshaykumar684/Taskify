@@ -7,8 +7,8 @@ const initialTaskData = {
   title: "",
   description: "",
   dueDate: new Date().toISOString().split("T")[0],
-  priority: "",
-  status: "",
+  priority: "Low",
+  status: "Pending",
 };
 
 export const TaskForm = () => {
@@ -27,7 +27,7 @@ export const TaskForm = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(formData);
+
       await makePostCall(formData);
 
       setFormData(initialTaskData);
@@ -94,32 +94,37 @@ export const TaskForm = () => {
                 />
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Priority</span>
-                </label>
-                <input
-                  type="text"
-                  name="priority"
-                  placeholder="Priority"
-                  className="input input-bordered w-full"
-                  value={formData.priority}
-                  onChange={handleChange}
-                  required
-                />
+                <fieldset className="fieldset">
+                  <label className="label">
+                    <span className="label-text">Priority</span>
+                  </label>
+                  <select
+                    name="priority"
+                    className="select"
+                    value={formData.priority}
+                    onChange={handleChange}
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </fieldset>
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Status</span>
-                </label>
-                <input
-                  type="text"
-                  name="status"
-                  placeholder="Status"
-                  className="input input-bordered w-full"
-                  value={formData.status}
-                  onChange={handleChange}
-                  required
-                />
+                <fieldset className="fieldset">
+                  <label className="label">
+                    <span className="label-text">Status</span>
+                  </label>
+                  <select
+                    name="status"
+                    className="select"
+                    value={formData.status}
+                    onChange={handleChange}
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </fieldset>
               </div>
 
               <div className="form-control mt-6">

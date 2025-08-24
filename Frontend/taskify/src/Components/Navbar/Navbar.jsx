@@ -42,11 +42,12 @@ export const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/tasks/new">New Task</Link>
-          </li>
+
           {isLoggedIn ? (
             <>
+              <li>
+                <Link to="/tasks/new">New Task</Link>
+              </li>
               <li>
                 <span className="text-sm font-medium">{loggedInUserEmail}</span>
               </li>
